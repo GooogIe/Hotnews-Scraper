@@ -15,8 +15,8 @@ As shown in main.py file
 - Create an instance and play with it's methods :P
 
 TODO:
--Add more sources.
--Add categories for news
--Should i create a lil documentation?
+- Add more sources.
+- Add categories for news
+- Should i create a lil documentation?
 
 Hit me up on telegram: @eigoog
