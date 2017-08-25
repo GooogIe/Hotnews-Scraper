@@ -1,8 +1,7 @@
 # Hotnews-Scraper
-Simple hotnews scraper
-Scrape the last news from a couple of websites
+Hotnews scraper, information made simple.
 
-<p align="center"><img src="http://i.imgur.com/OT0Yx0i.png" /</p>
+<p align="center"><img src="http://i.imgur.com/3PTT2fM.png" /</p>
 
 # This script allow you to:
 - Get all the hotnews from several websites
