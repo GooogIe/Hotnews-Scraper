@@ -48,7 +48,7 @@ class Tgcom(Source):
 		the lastNews, and update that one
 
 		"""
-		tmp = self.getArticle(-1)			# Get the last one
+		tmp = self.getArticle(0)			# Get the last one
 		if self._lastNews.equals(tmp):		# If it's the last stored one
 			return None						# Return none
 		self._lastNews = tmp				# Else set the last stored one to this one
