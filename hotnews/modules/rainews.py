@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from skeletons.news import News
-from skeletons.source import Source
+from .skeletons.news import News
+from .skeletons.source import Source
 import requests
 from bs4 import BeautifulSoup
 
@@ -24,7 +24,7 @@ class Rainews(Source):
 		"""
 		articleslist = []
 		data = requests.get(self.homepage).content
-		page = BeautifulSoup(data,"lxml")
+		page = BeautifulSoup(data,"html.parser")
 		articles = page.find("ul",{"id":"tic"})
 		articles = articles.findAll("li")
 		for article in articles:
@@ -48,7 +48,7 @@ class Rainews(Source):
 
 		"""
 		tmp = self.getArticle(0)			# Get the last one
-		if self._lastNews.equals(tmp):		# If it's the last stored one
+		if tmp.equals(self._lastNews):		# If it's the last stored one
 			return None						# Return none
 		self._lastNews = tmp				# Else set the last stored one to this one
 		return self._lastNews				# Return it
