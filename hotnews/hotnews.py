@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from modules import tgcom,ansa,corriere,tiscali,adnkronos,rainews
+from .modules import tgcom,ansa,corriere,tiscali,adnkronos,rainews
 import time,logging
 sources = []
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s -    %(levelname)s    - %(message)s', level=logging.INFO)
 
 sources.append(tgcom.Tgcom())
 sources.append(ansa.Ansa())
@@ -47,7 +47,7 @@ class NewsScraper():
 
 		"""
 		for news in self.getAllNews():
-			print news.getNews()+"\n"
+			print(news.getNews()+"\n")
 
 	def getAllRawNews(self):
 		"""
@@ -122,7 +122,7 @@ class NewsScraper():
 
 		"""
 		for item in self.getLastNews():
-			print item.getNews()+"\n"
+			print(item.getNews()+"\n")
 
 	def loop(self):
 		"""
