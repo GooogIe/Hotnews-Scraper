@@ -31,7 +31,7 @@ class News():
 		if self.date is not None: news.update({"date":self.date})
 		if self.title is not None: news.update({"title":self.title})
 		if self.source is not None: news.update({"source":self.source})
-		if self.source_name is not None: news.update({"source_name":self.url})
+		if self.source_name is not None: news.update({"source_name":self.source_name})
 		return news
 
 	def getNews(self):
@@ -57,10 +57,9 @@ class News():
 
 		"""
 		if news == None: return False
+		if news == self: return True
 		if self.url != news.url: return False
 		if self.time != news.time: return False
 		if self.date != news.date: return False
 		if self.title != news.title: return False
-		if self.source != news.source: return False
-		if self.source_name != news.source_name: return False
 		return True
