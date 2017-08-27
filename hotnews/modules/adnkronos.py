@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from skeletons.news import News
-from skeletons.source import Source
+from .skeletons.news import News
+from .skeletons.source import Source
 import requests
 from bs4 import BeautifulSoup
 
@@ -24,17 +24,27 @@ class Adnkronos(Source):
 		"""
 		articleslist = []
 		data = requests.get(self.homepage).content
-		page = BeautifulSoup(data,"lxml")
-		articles = page.find("ul",{"class":"bxslider_news_tiker"})
-		articles = articles.findAll("li")
-		for article in articles:
-			art_url = article.find("a",href=True)['href']
+		page = BeautifulSoup(data,"html.parser")
+		try:
+			articles = page.find("ul",{"class":"bxslider_news_tiker"})
+			articles = articles.findAll("li")
+			for article in articles:
+				art_url = article.find("a",href=True)['href']
+				art_date = None
+				art_time = article.findAll("span")[0].text
+				art_title= article.findAll("span")[1].text.replace("- ","",1)
+			
+				art_full = News(url = art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename)
+				articleslist.append(art_full)
+		except:
+			article = page.find("div",{"id":"lastMinute"})
+			art_url = self.homepage
 			art_date = None
-			art_time = article.findAll("span")[0].text
-			art_title= article.findAll("span")[1].text.replace("- ","",1)
+			art_time = article.find("div",{"class":"hour"}).text
+			art_title= article.find("span").text
 			
 			art_full = News(url = art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename)
-			articleslist.append(art_full)
+			articlelist.append(art_full)
 		self._articles = articleslist
 
 	def getLastNews(self):
@@ -48,9 +58,11 @@ class Adnkronos(Source):
 		the lastNews, and update that one
 
 		"""
-		self.__findAvailableArticles__()	# Updates the list of the articles
-		tmp = self.getArticle(0)			# Get the last one
-		if self._lastNews.equals(tmp):		# If it's the last stored one
-			return None						# Return none
-		self._lastNews = tmp				# Else set the last stored one to this one
-		return self._lastNews				# Return it
+		try:
+			tmp = self.getArticle(0)			# Get the last one
+			if tmp.equals(self._lastNews):		# If it's the last stored one
+				return None						# Return none
+			self._lastNews = tmp				# Else set the last stored one to this one
+			return self._lastNews				# Return it
+		except:
+			return None
