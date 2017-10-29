@@ -48,7 +48,7 @@ class Rainews(Source):
 
 		"""
 		tmp = self.getArticle(0)			# Get the last one
-		if tmp.equals(self._lastNews):		# If it's the last stored one
+		if self._lastNews.equals(tmp):		# If it's the last stored one
 			return None						# Return none
 		self._lastNews = tmp				# Else set the last stored one to this one
 		return self._lastNews				# Return it

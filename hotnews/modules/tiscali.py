@@ -38,8 +38,11 @@ class Tiscali(Source):
 			except:
 				art_time = art_date
 				art_date = None
+			art_tmp = article.find("div",attrs={"class":"categoryLabel"})
+			art_category = art_tmp.find("strong").text
+
 			art_title= article.find("h3").text
-			art_full = News(url = self.homepage+art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename)
+			art_full = News(url = self.homepage+art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename,category=art_category)
 			articleslist.append(art_full)
 		self._articles = articleslist
 
@@ -55,7 +58,7 @@ class Tiscali(Source):
 
 		"""
 		tmp = self.getArticle(0)			# Get the last one
-		if tmp.equals(self._lastNews):		# If it's the last stored one
+		if self._lastNews.equals(tmp):		# If it's the last stored one
 			return None						# Return none
 		self._lastNews = tmp				# Else set the last stored one to this one
 		return self._lastNews				# Return it

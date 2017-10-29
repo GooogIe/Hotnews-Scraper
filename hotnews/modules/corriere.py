@@ -24,8 +24,8 @@ class Corriere(Source):
 		"""
 		articleslist = []
 		data = requests.get(self.homepage+"/notizie-ultima-ora/index.shtml").content
-
 		page = BeautifulSoup(data,"html.parser")
+
 		articles = page.find("ul",attrs={"class" : "listing-content"})
 		articles = page.findAll("li",attrs={"class" : "listing-item"})
 		for article in articles:
@@ -36,8 +36,9 @@ class Corriere(Source):
 			art_date = article.find("span",attrs={"class" : "news-date"}).text
 			art_time = article.find("span",attrs={"class" : "news-time"}).text
 			art_title= article.find("h5",attrs={"class" : "news-title"}).text
+			art_category = article.find("span",attrs={"class" : "news-cat"}).text.lower()
 
-			art_full = News(url = self.homepage+art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename)
+			art_full = News(url = self.homepage+art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename,category=art_category)
 			articleslist.append(art_full)
 		self._articles = articleslist
 
@@ -53,7 +54,7 @@ class Corriere(Source):
 
 		"""
 		tmp = self.getArticle(0)			# Get the last one
-		if tmp.equals(self._lastNews):		# If it's the last stored one
+		if self._lastNews.equals(tmp):		# If it's the last stored one
 			return None						# Return none
 		self._lastNews = tmp				# Else set the last stored one to this one
 		return self._lastNews				# Return it

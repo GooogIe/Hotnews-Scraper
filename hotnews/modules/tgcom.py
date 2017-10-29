@@ -12,6 +12,12 @@ class Tgcom(Source):
 		name = "Tgcom24"
 		Source.__init__(self,homepage,News(None,None,None,None),[],name)
 
+	def __getCategory__(self,url):
+		try:
+			return url.split("/")[1]	
+		except:
+			return "ultimora"
+
 	def _findAvailableArticles_(self):
 		"""
 
@@ -33,7 +39,9 @@ class Tgcom(Source):
 			art_url = article.find("a",href=True)['href']
 			art_time = article.find("time").text
 			art_title= article.find("h3").text.strip()
-			art_full = News(url = self.homepage+art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename)
+			art_category = self.__getCategory__(art_url)
+
+			art_full = News(url = self.homepage+art_url,date = art_date,time = art_time,title = art_title,source = self.homepage,source_name = self.websitename,category=art_category)
 			articleslist.append(art_full)
 		self._articles = articleslist
 
@@ -49,7 +57,7 @@ class Tgcom(Source):
 
 		"""
 		tmp = self.getArticle(0)			# Get the last one
-		if tmp.equals(self._lastNews):		# If it's the last stored one
+		if self._lastNews.equals(tmp):		# If it's the last stored one
 			return None						# Return none
 		self._lastNews = tmp				# Else set the last stored one to this one
 		return self._lastNews				# Return it
