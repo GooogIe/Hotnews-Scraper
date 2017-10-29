@@ -7,13 +7,14 @@ class News():
 	scraped news.
 
 	"""
-	def __init__(self,url,time,title,source="",source_name="",date=""):
+	def __init__(self,url,time,title,source="",source_name="",date="",category="ultimora"):
 		self.url = url
 		self.time = time
 		self.date = date
 		self.title = title
 		self.source = source
 		self.source_name = source_name
+		self.category = category
 
 	def getRawNews(self):
 		"""
@@ -30,7 +31,8 @@ class News():
 		if self.time is not None: news.update({"time":self.time})
 		if self.date is not None: news.update({"date":self.date})
 		if self.title is not None: news.update({"title":self.title})
-		if self.source is not None: news.update({"source":self.source})
+		if self.category is not None: news.update({"category":self.category})
+		if self.source is not None: news.update({"source":self.source_name})
 		if self.source_name is not None: news.update({"source_name":self.source_name})
 		return news
 
@@ -44,7 +46,7 @@ class News():
 		regarding the news
 
 		"""
-		return "Source: "+self.source_name + "\n" + self.time + " - " + self.title + "\nMore: "+self.url
+		return "Source: "+self.source_name + "\n" + self.time + " - " + self.title + "\nCategory: "+self.category+"\nMore: "+self.url
 
 	def equals(self,news):
 		"""
@@ -57,9 +59,10 @@ class News():
 
 		"""
 		if news == None: return False
-		if news == self: return True
 		if self.url != news.url: return False
 		if self.time != news.time: return False
 		if self.date != news.date: return False
 		if self.title != news.title: return False
+		if self.source != news.source: return False
+		if self.source_name != news.source_name: return False
 		return True
