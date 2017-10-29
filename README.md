@@ -14,9 +14,9 @@ As shown in main.py file
 - Just clone this repo, and import from hotnews the NewsScraper class
 - Create an instance and play with it's methods :P
 
-TODO:
-[ ] Add more sources.
-[x]  Add categories for news
-[ ]  Should i create a lil documentation?
+## TODO
+- [ ] Add more sources.
+- [x]  Add categories for news
+- [ ]  Should i create a lil documentation?
 
 Hit me up on telegram: @eigoog
