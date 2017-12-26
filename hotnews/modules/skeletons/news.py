@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from difflib import SequenceMatcher
+
+
+def similar(a, b):#https://stackoverflow.com/a/17388505
+    return SequenceMatcher(None, a, b).ratio()
+    
 
 class News():
 	"""
@@ -62,7 +68,7 @@ class News():
 		if self.url != news.url: return False
 		if self.time != news.time: return False
 		if self.date != news.date: return False
-		if self.title != news.title: return False
+		if similar(self.title,news.title) < 0.7: return False
 		if self.source != news.source: return False
 		if self.source_name != news.source_name: return False
 		return True
