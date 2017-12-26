@@ -89,10 +89,10 @@ class NewsScraper():
 				logging.info("No new news on %s." % (source.websitename))
 		return news
 
-	def getLastRawNews(self):
+	def getLastRawNews(self,rawnewses=[]):
 		"""
 
-		Params: None
+		Params: rawnewses(Lists)
 		Returns: List dictionaries
 	
 		Returns dictionaries containing news information
@@ -108,7 +108,12 @@ class NewsScraper():
 		"""
 		raw = []
 		for item in self.getLastNews():
-			raw.append(item.getRawNews())
+		    if rawnewses:
+		        for tmp in rawnewses:
+		            if not item.equals(tmp):
+			            raw.append(item.getRawNews())
+			else:
+			    raw.append(item.getRawNews())
 		return raw
 
 
